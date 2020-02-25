@@ -1,0 +1,4 @@
+npm_modules
+*.log
+*.error
+DS_Store
