@@ -24,40 +24,28 @@
 </template>
 
 <script>
-    import io from "socket.io-client"
     export default {
 
         async created(){
             var urlParams = new URLSearchParams(window.location.search);
-            this.token =  urlParams.get("token"); 
+            var token =  urlParams.get("token");
+            window.localStorage.setItem("Auth",token) 
             var response = await window.fetch("http://localhost:3000/user", { headers: {authorization: this.token}, mode: 'cors', method: "GET"})
             var user = await response.json()
             console.log(user)
-
-            this.socket.on('MESSAGE', (data) => {
-                this.messages = [...this.messages, data];
-                // you can also do this.messages.push(data)
-            });
         },
 
         data() {
             return {
             user: '',
             message: '',
-            messages: [],
-            socket : io('localhost:8080')
+            messages: []
           }
         },
 
         methods: {
             sendMessage(e) {
                 e.preventDefault();
-
-                this.socket.emit('SEND_MESSAGE', {
-                    token: this.token,
-                    message: this.message
-                });
-                this.message = ''
             }
         },
     }
