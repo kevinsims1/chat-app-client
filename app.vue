@@ -1,64 +1,46 @@
 <template>
-    <div class="card mt-3">
-      <div class="card-body">
-          <div class="card-title">
-              <h3>Chat Group</h3>
-              <hr>
-          </div>
-          <div class="card-body">
-              <div class="messages" v-for="(msg, index) in messages" :key="index">
-                  <p><span class="font-weight-bold">{{ msg.user }}: </span>{{ msg.message }}</p>
-              </div>
-          </div>
-      </div>
-      <div class="card-footer">
-          <form @submit.prevent="sendMessage">
-              <div class="gorm-group pb-3">
-                  <label for="message">Message:</label>
-                  <input type="text" v-model="message" class="form-control">
-              </div>
-              <button type="submit" class="btn btn-success">Send</button>
-          </form>
-      </div>
-  </div>
+    <Layout>
+        <div> 
+            <h1>Welcome Back, Lets Chat Around!</h1>
+        </div>
+    </Layout>
 </template>
 
 <script>
-    import io from "socket.io-client"
+    import Layout from './layout';
+
     export default {
-
-        async created(){
-            var urlParams = new URLSearchParams(window.location.search);
-            this.token =  urlParams.get("token"); 
-            var response = await window.fetch("http://localhost:3000/user", { headers: {authorization: this.token}, mode: 'cors', method: "GET"})
-            var user = await response.json()
-            console.log(user)
-
-            this.socket.on('MESSAGE', (data) => {
-                this.messages = [...this.messages, data];
-                // you can also do this.messages.push(data)
-            });
-        },
-
-        data() {
-            return {
-            user: '',
-            message: '',
-            messages: [],
-            socket : io('localhost:8080')
-          }
-        },
-
-        methods: {
-            sendMessage(e) {
-                e.preventDefault();
-
-                this.socket.emit('SEND_MESSAGE', {
-                    token: this.token,
-                    message: this.message
-                });
-                this.message = ''
-            }
-        },
+        components: {
+            Layout
+        }
     }
 </script>
+
+<style scoped>
+    
+
+    div{
+        height: 100vh;
+        width: 100%;
+        background: red;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    
+</style>
+<style>
+    body{
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0
+    }
+    
+    html{
+        height: 100%;
+        width: 100%
+    }
+</style>
