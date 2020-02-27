@@ -1,8 +1,11 @@
 <template>
     <Layout>
-        <div> 
-            <h1>Welcome Back, Lets Chat Around!</h1>
-        </div>
+        <template v-slot:default="slotProps">
+            <div> 
+                <h1> Welcome Back {{slotProps.curUsr.user.name}}, Lets Chat Around!</h1>
+            </div>
+        </template>
+        
     </Layout>
 </template>
 

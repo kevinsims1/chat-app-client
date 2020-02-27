@@ -5,13 +5,17 @@
                 <div> 
                     {{this.curUsr.user.name}}
                 </div>
-                <div v-for="room in this.curUsr.rooms"
-                     :key="room.id"> 
-                    {{room.name}}
+
+                <h3>Messages</h3>
+                <div class="container"
+                    v-for="room in this.curUsr.rooms"
+                     :key="room.id">
+                    <h4>{{room.name}}</h4>
+                    <h6>{{room.messages[0]}}</h6>
                 </div>
             </a>
         </div>
-        <slot />
+        <slot :curUsr="this.curUsr"/>
     </div>
 </template>
 
@@ -50,14 +54,34 @@
     overflow-y: hidden;
 }
 
+/* Chat containers */
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* Clear floats */
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+h3 {
+    color:black
+}
+
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 160px; /* Set the width of the sidebar */  
+    width: 13rem; /* Set the width of the sidebar */  
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black */
+    background-color: white; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    padding: 1rem;
 }
 
 /* The navigation menu links */
@@ -72,7 +96,7 @@
   padding: .5rem;
   text-decoration: none;
   font-size: 25px;
-  color: white;
+  color: black;
   display: block;
 }
 
